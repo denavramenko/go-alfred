@@ -208,17 +208,25 @@ func getPrefsDirectory() string {
 		folder = path.Join(currentUser.HomeDir, "Library", "Application Support", "Alfred "+version)
 	}
 
-	var info os.FileInfo
-	var err error
-	if info, err = os.Stat(folder); err != nil {
-		panic(err)
-	}
-
-	if !info.IsDir() {
-		panic(fmt.Errorf("%s is not a directory", folder))
+	if !folderExists(folder){
+		folder = path.Join(currentUser.HomeDir, "Library", "Application Support", "Alfred "+version)
+		if !folderExists(folder){
+			panic("Folder doesn't exist")
+		}
 	}
 
 	return folder
+}
+
+func folderExists(folder string){
+	var info os.FileInfo
+	var err error
+	if info, err = os.Stat(folder); err != nil {
+		return false
+	}
+	if !info.IsDir() {
+		return false
+	}
 }
 
 func loadPreferences() (prefs alfred.Plist) {

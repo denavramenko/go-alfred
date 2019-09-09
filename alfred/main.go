@@ -208,9 +208,9 @@ func getPrefsDirectory() string {
 		folder = path.Join(currentUser.HomeDir, "Library", "Application Support", "Alfred "+version)
 	}
 
-	if !folderExists(folder){
-		folder = path.Join(currentUser.HomeDir, "Library", "Application Support", "Alfred "+version)
-		if !folderExists(folder){
+	if !folderExists(folder) {
+		folder = path.Join(currentUser.HomeDir, "Library", "Application Support", "Alfred")
+		if !folderExists(folder) {
 			panic("Folder doesn't exist")
 		}
 	}
@@ -227,6 +227,7 @@ func folderExists(folder string) bool {
 	if !info.IsDir() {
 		return false
 	}
+	return true
 }
 
 func loadPreferences() (prefs alfred.Plist) {

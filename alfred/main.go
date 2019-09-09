@@ -218,7 +218,7 @@ func getPrefsDirectory() string {
 	return folder
 }
 
-func folderExists(folder string){
+func folderExists(folder string) bool {
 	var info os.FileInfo
 	var err error
 	if info, err = os.Stat(folder); err != nil {
